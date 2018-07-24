@@ -1,5 +1,40 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
-
 {{outlet}}
+<div class="Table">
+<div class="Title">
+    <p>Checks List</p>
+</div>
+<div class="Heading">
+<div class="Cell" >
+Service <img src="{{rootURL}}/arrowUp.png" class="Arrow" {{action 'sortBy' 'alias:desc'}}/>
+<img src="{{rootURL}}/arrowDown.png" class="Arrow" {{action 'sortBy' 'alias:asc'}}/>
+</div>
+<div class="Cell">
+Status
+<img src="{{rootURL}}/arrowUp.png" class="Arrow" {{action 'sortBy' 'down:desc'}}/>
+<img src="{{rootURL}}/arrowDown.png" class="Arrow" {{action 'sortBy' 'down:asc'}}/>
+</div>
+<div class="Cell">
+Rolling Uptime for 30 days
+<img src="{{rootURL}}/arrowUp.png" class="Arrow" {{action 'sortBy' 'uptime:desc'}}/>
+<img src="{{rootURL}}/arrowDown.png" class="Arrow" {{action 'sortBy' 'uptime:asc'}}/>
+</div>
+</div>
+{{#each sortedStats as |check|}}
+<div class="Row">
+<div class="Cell">
+<a href={{check.link}} target="_blank"><b>{{check.alias}}</b></a><br/>{{check.token}}
+</div>
+<div class="Cell">
+{{#if check.down}}
+  <span>Down since {{moment-format check.down_since 'LLLL'}}</span>
+{{else}}
+  <span>up</span>
+{{/if}}
+<br/>
+</div>
+<div class="Cell">
+{{check.uptime}} %<br/>
+</div>
+</div>
+{{/each}}
+</div>
